@@ -28,6 +28,13 @@ yarn-error.log*
 # local env files
 .env*.local
 
+
+# ignore these also
+.env
+yarn.lock
+package-lock.json
+
+
 # vercel
 .vercel
 
