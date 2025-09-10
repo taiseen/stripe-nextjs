@@ -5,3 +5,10 @@
 ### Learning context:-
 
 - File & Folder Structure
+
+### UI Packages
+
+- npx shadcn@latest add dropdown-menu
+- npx shadcn@latest add navigation-menu
+- npx shadcn@latest add badge
+- npx shadcn@latest add card
