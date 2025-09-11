@@ -12,3 +12,9 @@
 - npx shadcn@latest add navigation-menu
 - npx shadcn@latest add badge
 - npx shadcn@latest add card
+
+### Database
+
+- prisma + mongodb
+- npx prisma init
+- npx prisma db push

@@ -1,0 +1,56 @@
+// put our models and relations in our tables
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  free
+  premium
+}
+
+enum SubscriptionPeriod {
+  monthly
+  yearly
+}
+
+// create a user model which is going to be our user table 
+// but since we are using mongodb that would be called as user collection
+
+model User {
+  // Collision resistant uid 
+  id             String        @id @default(cuid()) @map("_id")
+  email          String        @unique
+  name           String?
+  image          String?
+  // plan by default is free & when user going to upgrade, it to be premium 
+  plan           Plan          @default(free)
+  // first its going to be null & after upgrade its become stripe customer ID 
+  // this will be important when we need to delete the subscription
+  customerId     String?       @unique
+  // create a relation for the user, so it's going to have a subscription 
+  Subscription   Subscription?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  subscriptionId String?
+}
+
+model Subscription {
+  id        String             @id @default(cuid()) @map("_id")
+  userId    String             @unique
+  plan      Plan
+  period    SubscriptionPeriod
+  startDate DateTime           @default(now())
+  endDate   DateTime
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  User      User               @relation(fields: [userId], references: [id]) // relation that it has with the user model
+
+  // now Prisma knows how to do one to one relationship
+  // each user can have one subscription & one subscription can be associated with one user
+}
