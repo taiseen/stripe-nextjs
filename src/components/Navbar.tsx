@@ -2,6 +2,9 @@
 
 import ModeToggle from "./ModeToggle";
 import Link from "next/link";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { isUserSubscribed } from "@/app/premium/actions";
+import { useQuery } from "@tanstack/react-query";
 import { buttonVariants } from "./ui/button";
 import { routeList } from "@/constants";
 import { LogOut } from "lucide-react";
@@ -13,8 +16,14 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
-  const isSubscribed = true;
-  const isAuthenticated = true;
+  const { isAuthenticated } = useKindeBrowserClient();
+
+  const { data } = useQuery({
+    queryKey: ["isUserSubscribed"],
+    queryFn: async () => isUserSubscribed(),
+  });
+
+  const isSubscribed = data?.subscribed;
 
   return (
     <header
