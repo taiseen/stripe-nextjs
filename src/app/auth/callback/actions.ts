@@ -11,18 +11,26 @@ export async function checkAuthStatus() {
 
     if (!authUser) return { success: false };
 
-    const existingUser = await prisma.user.findUnique({ where: { id: authUser.id } });
+    const isExistingUser = await prisma.user.findUnique({ where: { id: authUser.id } });
 
     // sign up time store/save auth user data into db 
-    if (!existingUser) {
-        await prisma.user.create({
+    if (!isExistingUser) {
+
+        const { id, email, given_name, picture } = authUser;
+
+        const newUserInfo = {
             data: {
-                id: authUser.id,
-                email: authUser.email!,
-                name: authUser.given_name + " " + authUser.family_name,
-                image: authUser.picture,
+                id,
+                email: email!,
+                name: given_name,
+                image: picture,
             },
-        });
+        };
+
+        console.log({ newUserInfo });
+
+        await prisma.user.create(newUserInfo);
+
     }
 
     return { success: true };

@@ -8,11 +8,10 @@ import { Loader } from "lucide-react";
 import { useEffect } from "react";
 
 const Page = () => {
-
   const router = useRouter();
-  
+
   const { user } = useKindeBrowserClient();
-  
+
   const { data } = useQuery({
     queryKey: ["checkAuthStatus"],
     queryFn: async () => await checkAuthStatus(),
@@ -20,7 +19,7 @@ const Page = () => {
 
   useEffect(() => {
     const stripePaymentLink = localStorage.getItem("stripePaymentLink");
-    
+
     if (data?.success && stripePaymentLink && user?.email) {
       localStorage.removeItem("stripePaymentLink");
       router.push(stripePaymentLink + `?prefilled_email=${user.email}`);

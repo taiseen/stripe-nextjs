@@ -18,3 +18,9 @@
 - prisma + mongodb
 - npx prisma init
 - npx prisma db push
+
+### Auth System
+
+- [Kinde auth system][authSide]
+
+[authSide]: https://app.kinde.com

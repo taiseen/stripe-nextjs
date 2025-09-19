@@ -1,4 +1,4 @@
-export type   = {
+export type LayoutType = {
     children: React.ReactNode
 }
 
