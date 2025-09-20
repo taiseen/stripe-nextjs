@@ -21,4 +21,11 @@ export type PricingProps = {
     benefitList: string[];
     href: string;
     billing: string;
+    paymentLink?: string;
 }
+
+export type PaymentLinkProps = {
+    href: string;
+    paymentLink?: string;
+    text: string;
+};

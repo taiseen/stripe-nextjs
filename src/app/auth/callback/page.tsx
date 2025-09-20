@@ -22,6 +22,7 @@ const Page = () => {
 
     if (data?.success && stripePaymentLink && user?.email) {
       localStorage.removeItem("stripePaymentLink");
+      // 🌐🌐🌐 redirect user to stripe payment link with prefilled email
       router.push(stripePaymentLink + `?prefilled_email=${user.email}`);
     } else if (data?.success === false) {
       router.push("/");
