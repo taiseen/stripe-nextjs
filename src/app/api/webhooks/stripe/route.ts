@@ -21,10 +21,12 @@ export async function POST(req: Request) {
 
         return new Response("Webhook received", { status: 200 });
 
-    } catch (err: any) {
+    } catch (err) {
 
-        console.error("Webhook processing failed:", err.message || err);
+        console.error("Webhook processing failed:", err instanceof Error ? err.message : err);
 
-        return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+        const message = err instanceof Error ? err.message : "Unknown error";
+
+        return new Response(`Webhook Error: ${message}`, { status: 400 });
     }
 }

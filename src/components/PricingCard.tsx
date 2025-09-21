@@ -1,8 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
 import { PopularPlanType, PricingProps } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
-import Link from "next/link";
 import {
   CardDescription,
   CardContent,
