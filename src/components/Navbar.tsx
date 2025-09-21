@@ -10,9 +10,9 @@ import { routeList } from "@/constants";
 import { LogOut } from "lucide-react";
 import { RouteProps } from "@/types";
 import {
-  NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
+  NavigationMenu,
 } from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
@@ -62,7 +62,7 @@ const Navbar = () => {
             {isAuthenticated && isSubscribed && (
               <Link
                 rel="noreferrer noopener"
-                href={"#"}
+                href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL!}
                 target="_blank"
                 className={`text-[17px] ${buttonVariants({
                   variant: "ghost",

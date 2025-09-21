@@ -8,12 +8,12 @@ const Hero = () => {
     <div className="hero-section">
       <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 ">
         <div className="text-center lg:text-start space-y-6">
-          <main className="text-5xl md:text-6xl font-bold text-balance">
+          <main className="text-5xl md:text-6xl font-bold text-balance mb-4">
             <h1 className="inline">
               <span className="inline bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-transparent bg-clip-text">
                 Stripe
               </span>{" "}
-              Course with
+              Demo with
             </h1>{" "}
             <h2 className="inline">
               <span className="inline bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-transparent bg-clip-text">
@@ -22,9 +22,12 @@ const Hero = () => {
             </h2>
           </main>
 
-          {/* <a href=''>
-						<img src='https://made-with.prisma.io/dark.svg' width={220} height={130} alt='' />
-					</a> */}
+          <Image
+            src="https://made-with.prisma.io/dark.svg"
+            alt="made with prisma"
+            height={130}
+            width={220}
+          />
 
           <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0 text-balance">
             Stripe subscriptions are intimidating, but they don&apos;t have to

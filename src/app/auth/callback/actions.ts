@@ -3,6 +3,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import prisma from "@/db/prisma";
 
+// 🟩🟩🟩 backend - controller logic
 export async function checkAuthStatus() {
 
     const { getUser } = getKindeServerSession();

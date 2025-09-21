@@ -5,7 +5,7 @@ import Stripe from "stripe";
 
 
 
-export function verifyWebhookSignature(
+export function verifyStripeWebhookSignature(
     payload: string,
     signature: string,
     secret: string
@@ -22,11 +22,18 @@ export function verifyWebhookSignature(
 
 
 
-export async function handleWebhookEventRoute(event: Stripe.Event) {
+export async function handleStripeWebhookEventRoute(event: Stripe.Event) {
+
     switch (event.type) {
+
+        // Delegates to specific handler...
+
         case "checkout.session.completed":
-            // Delegates to specific handler
             await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+            break;
+
+        case "customer.subscription.deleted":
+            await handleCustomerSubscriptionDeleted(event.data.object as Stripe.Subscription);
             break;
 
         default:
@@ -145,4 +152,25 @@ function getPlanDetails(priceId: string) {
     }
 
     throw new Error(`Unknown Stripe price ID: ${priceId}`);
+}
+
+
+
+async function handleCustomerSubscriptionDeleted(subscriptionObj: Stripe.Subscription) {
+    const customerId = subscriptionObj.customer as string;
+
+    const user = await prisma.user.findUnique({ where: { customerId } });
+
+    if (!user) {
+        console.warn(`No user found for customerId: ${customerId} on subscription deletion.`);
+        return;
+    }
+
+    // Downgrade user plan
+    await prisma.user.update({
+        where: { id: user.id },
+        data: { plan: "free" }
+    });
+
+    console.log(`User ${user.email} downgraded to free plan.`);
 }

@@ -1,9 +1,10 @@
-import { handleWebhookEventRoute, verifyWebhookSignature } from "./helper";
+import { handleStripeWebhookEventRoute, verifyStripeWebhookSignature } from "./helper";
 
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
 
 
+// 🟩🟩🟩 backend - controller logic
 export async function POST(req: Request) {
 
     const body = await req.text();
@@ -14,9 +15,9 @@ export async function POST(req: Request) {
 
 
     try {
-        const event = verifyWebhookSignature(body, signature, WEBHOOK_SECRET);
+        const event = verifyStripeWebhookSignature(body, signature, WEBHOOK_SECRET);
 
-        await handleWebhookEventRoute(event);
+        await handleStripeWebhookEventRoute(event);
 
         return new Response("Webhook received", { status: 200 });
 
